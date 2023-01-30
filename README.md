@@ -1,102 +1,110 @@
-# Valuable
+# GetSet-Values
 **Console tool to read and set values in config files**
 
-Since I am a total sed- and awk noob, I struggled with reading config files into scripts, and spent a lot of time with trouble-shooting.
-Mostly because I got the sed and awk commands slightly wrong, and their syntax being...Cryptic,so to speak.
-And thus Valuable was born. A simple tool that does all the heavy lifting, so variables can be read into a script (or similar) with ease.
+Since I am a total sed- and awk noob, I struggled with reading config files into scripts, and spent a lot of time with troubleshooting.
+Mostly because I got the sed and awk commands slightly wrong, and their syntax being... Cryptic, to say the least.    
+And thus GetSet-Values was born; A simple tool that does all the heavy lifting, so variables can be read into a script (or similar) with ease.
 
-The tool concists of two console applications, **getvalue** and **setvalue**
-both of which has a similar syntax. 
+The tool concists of two console applications, **getvalue** and **setvalue**,
+both of which has a similar syntax.     
 As the names implies, they are used to either *read* a value from a config file, or *write* one.
 
+In order to prevent clogging up a script,there will be no output if there's any errors, 
+or -in the case of GetValue, if no match is found.
+However, by using the `-e` flag, any errors will be returned as output.
 
 
-**GetValue**
 
-USAGE: getvalue [OPTIONS]  (-f FILE -k KEY)             
+
+# GetValue
+**USAGE:** getvalue *[OPTIONS]*   ( -f FILE  -k KEY )
+
 Retrieves the value of the specified key/variable from a config file.
-In order to prevent clogging up a script,there will be no output if no match is found or if there's any errors,
-unless the -e flag is provided, in which case any errors will be returned as output.
 
-OPTIONS:                                                                      
-  -h            Show help message and exit                                     
-  -e            Print error messages (Default: Do no print)                   
-  -n            Interactive mode. (Cannot be combined with -f -k -i)          
-  -d CHARACHTER Specify delimiter charchter (Default =) Ignored when using -i 
-  -i SECTION    Read from INI-file (Section must be specified)                
+Both `-f` and `-k` are required in non-interactive mode, the rest is optional.
+Allowed delimiter charachters are: Equal(**=**) Dash(**-**) Colon(**:**)      
+If no delimiter is specified, then **=** is assumed.
 
-MANDATORY:                                                                    
-  -f FILE       Config file to read                                           
-  -k KEY        Key/Variable to read from file                                
+When using `-i` the file is read as an INI-file, and `-i` must be followed by a section name within the file, 
+even if there is only one section, as INI-files are required to have at least one,
+and since they are organized in a specific way, the `-d` option is ignored when reading them, 
+as **=** is the *only* delimiter allowed.
 
-Both -f and -k are required in non-interactive mode,                          
-Allowed delimiter charachters are: Equal(=) Dash(-) Colon(:)                  
-If no delimiter is specified, then = is assumed.                              
-When using -i the file is read as an INI-file, and -i must be followed by a   
-section name within the file, even if there is only one section, as INI-files are required to have at least one.              
-Because INI-files are organized in a specific way, the -d option is ignored when reading them, as = is the *only*
-delimiter allowed.
+Interactive mode allows for opening a specific file, and read multiple values consecutively for testing or debugging purposes.
+`-f`and `-k` are ignored when starting in interactive mode, and as such they can be omitted.     
+Press `CTRL+C` or type `quit` to exit.
 
-Examples:  
+| Options | Description |
+| :---: | :--- |
+| `-f [FILE]`| File to read **(Required)** |
+| `-k [KEY]`| Key to read from file **(Required)** |
+| `-i [SECTION]` | Read from INI-file **(Section is required)** |
+| `-d [CHARACHTER]` | Specify delimiter character *(Optional)* |
+| `-h` | Show help screen, and exit |
+| `-e` | Print error messages *(Optional)* |
+| `-n` | Interactive mode |
 
-     getvalue -f /etc/os-release -k NAME                                      
-  Prints the name of the currently running Linux distribution.                
+**Examples:**  
 
-     getvalue -e -d : -f colonfile.txt -k foo                                 
-  Prints the value of "foo" in *colonfile.txt* using a colon as the delimiter and shows errormessages (If any)                                           
+     echo $(getvalue -f /etc/os-release -k NAME) | figlet
+  Prints the name of the currently running Linux distribution in fancy text using figlet
 
-     getvalue -f inifile.ini -k foo -i bar                                    
-  Prints the value of "foo" in section "bar" from *inifile.ini*                 
+     getvalue -e -d : -f colonfile.txt -k foo
+  Prints the value of "foo" in *colonfile.txt* using a colon as the delimiter and shows errormessages (If any)
 
-Interactive mode allows for opening a specific file, and read                 
-multiple values consecutively for testing or debugging purposes.              
-Press CTRL+C or type "quit" to exit interactive mode                                                
+     getvalue -f inifile.ini -k foo -i bar
+  Prints the value of "foo" in section "bar" from *inifile.ini*
 
 
 
-**SetValue**
 
-USAGE: setvalue [-e -d DELIMITER] [-i SECTION] (-f FILE -k KEY VALUE)         
-Writes a value to the specified key/variable in a config file,                
-the key/value pair will be created if it does not exist.                      
 
-OPTIONS:                                                                      
-  -h            Show help screen and exit                                      
-  -e            Print error messages (Default: Do no print)                    
-  -d CHARACHTER Specify delimiter charchter (Default =) Ignored when using -i  
-  -i SECTION    Write to INI-file (Section must be specified)                  
+# SetValue
 
-MANDATORY:                                                                    
-  -f FILE      Config file to write to                                        
-  -k KEY       Key/Variable to write to file                                  
+**USAGE:** setvalue *[OPTIONS]*   ( -f FILE  -k KEY ) ( VALUE )
 
-Both -f and -k are required in all cases. -d and -i are optional.             
-Allowed delimiter charachters are: Equal(=) Dash(-) Colon(:)                  
-If no delimiter is specified, then = is assumed.                              
-When using -i the file is treated as an INI-file, and -i must be followed     
-by the section within the file to write the key/value pair, even if the file has just one section                   
-Both the file, section, and key/value is created automatically if they doesn't exist allready
-Delimiter option is ignored when writing INI files.                           
+Writes a vlaue to the file and key specified. The Key/Value pair will be created if it doesn't exist
 
-Examples:  
+Both `-f` and `-k` are required, the rest is optional.
+Allowed delimiter charachters are: Equal(**=**) Dash(**-**) Colon(**:**)     
+If no delimiter is specified, then **=** is assumed.
+
+When using `-i` the file is treated as an INI-file, and `-i` must be followed by the section within the file
+to write the key/value pair, even if the file has just one section.
+Non-existant files, sections, key/value pairs are created automatically as needed.
+Delimiter option is ignored when writing INI files.
+
+| Options | Description |
+| :---: | :--- |
+| `-f [FILE]`| File to read **(Required)** |
+| `-k [KEY]`| Key to read from file **(Required)** |
+| `-i [SECTION]` | Read from INI-file **(Section is required)** |
+| `-d [CHARACHTER]` | Specify delimiter character *(Optional)* |
+| `-h` | Show help screen, and exit |
+| `-e` | Print error messages *(Optional)* |
+
+**Examples:**  
 
      setvalue -e -f configfile -k foo bar                                     
-  Sets "bar" as the value of "foo" in *configfile*, and show errors (if any)    
+  Sets "bar" as the value of "foo" in* configfile *, and shows errors (if any)
 
      setvalue -d : -f colonfile.txt -k foo bar                                
-  Sets "bar" as the value of "foo" in *colonfile.txt* using a colon as the delimiter    
+  Sets "bar" as the value of "foo" in *colonfile.txt* using a colon as the delimiter
 
      setvalue -f inifile.ini -i foo -k bar whatever                           
-  Sets "whatever" as the value of "bar" in section "foo" in *inifile.ini* 
-  
-  
+  Sets "whatever" as the value of "bar" in section "foo" in *inifile.ini
+
+
+# Exit codes
+
+ Both applications has the same exit codes, which can be used to check whether an operation was
+ successfull or not, without clogging up a script with error messages.  
   
   | Exit code | Description       |
-  |-----------|-------------------|
+  |:---------:|:------------------|
   | 0         | Success           |
-  | 1         | Read/Write error  |
-  | 2         | Invalid option(s) |
+  | 1         | Read/Write error (File or key doesn't exist, or no permission)  |
+  | 2         | Invalid option(s) and/or argument(s)|
   
-  Both applications has the same exit codes, which can be used to check whether an operation was 
-  successfull or not, without clogging up a script with error messages.
+ 
   
