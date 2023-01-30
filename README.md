@@ -13,6 +13,8 @@ In order to prevent clogging up a script,there will be no output if there's any 
 or -in the case of GetValue, if no match is found.
 However, by using the `-e` flag, any errors will be returned as output.
 
+More features might be added if needed, currently and option to getting rid of "quotes" from quoted strings are planned.
+
 
 
 
