@@ -108,5 +108,33 @@ Delimiter option is ignored when writing INI files.
   | 1         | Read/Write error (File or key doesn't exist, or no permission)  |
   | 2         | Invalid option(s) and/or argument(s)|
   
+  
+# Installing
+
+The binaries can be used as-is in cunjunction with scripts, or they can be copied to a directory in either     
+local $PATH or system-wide.       
+
+Currently there are two ways of installing GetSet-Values:    
+
+**Download the binaries**    
+Copy the binaries to `/home/[USER]/.local/bin` to make them available for the user alone,     
+or `/usr/local/bin` to make them available system-wide for all users.      
+
+**Compiling**      
+The FreePascal Compiler is required to compile the sources.      
+It's available for both Linux, Windows, and MacOS, and can be obtained at [freepascal.org](https://www.freepascal.org/download.html)
+or in the package manager's default repo on most Linux distros.      
+The full-blown Lazarus IDE also has it included if you want the whole shebang.     
+
+ COMPILING IN LINUX:    
+ `make`    
+ `sudo make install` *(Optional)*       
+ 
+ 
+ COMPILING IN WINDOWS:       
+ `fpc -XX -O3 -vi getvalue.pas`     
+ `fpc -XX -O3 -vi setvalue.pas`      
+ Copy the binaries to *C:\windows\system32* or just use them as-is     
+  
  
   
