@@ -3,7 +3,10 @@
 
 Since I am a total sed- and awk noob, I struggled with reading config files into scripts, and spent a lot of time with troubleshooting.
 Mostly because I got the sed and awk commands slightly wrong, and their syntax being... Cryptic, to say the least.    
-And thus GetSet-Values was born; A simple tool that does all the heavy lifting, so variables can be read into a script (or similar) with ease.
+And thus GetSet-Values was born; A simple tool that does all the heavy lifting, so variables can be read into a script (or similar) with ease,
+ and without sourcing a file into the script -a file that would be run from start to end,
+ and with that the risk of bogous commands the file could contain- And without having to create functions in the script to read the file in a safer manner,
+And without clogging up the environment variables with every single entry in the file. 
 
 The tool concists of two console applications, **getvalue** and **setvalue**,
 both of which has a similar syntax.     
