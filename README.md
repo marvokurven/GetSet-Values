@@ -112,7 +112,8 @@ Delimiter option is ignored when writing INI files.
 # Installing
 
 The binaries can be used as-is in cunjunction with scripts, or they can be copied to a directory in either     
-local $PATH or system-wide.       
+local $PATH or system-wide.     
+There's no dependencies, except the compiler itself should you want to compile it for yourself
 
 Currently there are two ways of installing GetSet-Values:    
 
