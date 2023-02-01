@@ -135,6 +135,11 @@ The full-blown Lazarus IDE also has it included if you want the whole shebang.
  `fpc -XX -O3 -vi getvalue.pas`     
  `fpc -XX -O3 -vi setvalue.pas`      
  Copy the binaries to *C:\windows\system32* or just use them as-is     
+      
+ I have added a batch-script as a makefile for Windows, but it is not tested yet so bugs can be expected.    
+ Run it like so:     
+ `make`    
+ `make install`
   
  
   
