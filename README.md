@@ -81,9 +81,9 @@ Delimiter option is ignored when writing INI files.
 
 | Options | Description |
 | :---: | :--- |
-| `-f [FILE]`| File to read **(Required)** |
-| `-k [KEY]`| Key to read from file **(Required)** |
-| `-i [SECTION]` | Read from INI-file **(Section is required)** |
+| `-f [FILE]`| File to write **(Required)** |
+| `-k [KEY]`| Key to write to file **(Required)** |
+| `-i [SECTION]` | Write to INI-file **(Section is required)** |
 | `-d [CHARACHTER]` | Specify delimiter character *(Optional)* |
 | `-h` | Show help screen, and exit |
 | `-e` | Print error messages *(Optional)* |
@@ -91,13 +91,13 @@ Delimiter option is ignored when writing INI files.
 **Examples:**  
 
      setvalue -e -f configfile -k foo bar                                     
-  Sets "bar" as the value of "foo" in* configfile *, and shows errors (if any)
+  Sets "bar" as the value of "foo" in *configfile*, and shows errors (if any)
 
      setvalue -d : -f colonfile.txt -k foo bar                                
   Sets "bar" as the value of "foo" in *colonfile.txt* using a colon as the delimiter
 
      setvalue -f inifile.ini -i foo -k bar whatever                           
-  Sets "whatever" as the value of "bar" in section "foo" in *inifile.ini
+  Sets "whatever" as the value of "bar" in section "foo" in *inifile.ini*
 
 
 # Exit codes
